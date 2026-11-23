@@ -400,7 +400,7 @@ class Matmul(Operator):
                         Integer(0, len(valid_tiles) - 1, name='tile_idx'),
                         Integer(0, len(loop_orders) - 1,  name='lo_idx'),
                     ]
-                    n_initial_points = min(15, len(valid_tiles))
+                    n_initial_points = min(15, len(valid_tiles), n_calls)
 
                     result = gp_minimize(
                         _bayes_objective,
