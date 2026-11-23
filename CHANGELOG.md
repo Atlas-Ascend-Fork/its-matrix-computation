@@ -27,7 +27,7 @@ See LICENSE in the root of the software repository for the full text of the Lice
 
 ### Fixed
 
-- 暂无。
+- 修正 L1 到 L0A/L0B 带宽效率曲线中丢失小数点的测量值。
 
 ### Security
 
