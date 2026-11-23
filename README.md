@@ -151,10 +151,12 @@ python src/test_new_matmul_threemode.py --mode bayes --n_calls 100
 ### 4. Exhaustive 模式
 
 ```bash
-python src/test_new_matmul_threemode.py --mode exhaustive
+python src/test_new_matmul_threemode.py --mode exhaustive --shape 256,256,256
 ```
 
-穷举模式的运行时间随矩阵规模和合法分块数量快速增长，建议先使用小规模矩阵验证。
+`--shape` 按 `M,K,N` 指定输入矩阵 `[M,K] × [K,N]`。不传时仍使用默认的
+`1096,1600,1096`；穷举模式的运行时间随矩阵规模和合法分块数量快速增长，
+因此上面的入门命令使用较小矩阵。
 
 ### 5. 查看参数说明
 

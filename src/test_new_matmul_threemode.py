@@ -241,6 +241,8 @@ def main():
                         help="Number of parallel workers (processes).")
     parser.add_argument("--mode", type=str, default="fast", choices=["fast", "exhaustive","bayes"],
                         help="Compile mode for search.")
+    parser.add_argument("--shape", default="1096,1600,1096", metavar="M,K,N",
+                        help="Matrix dimensions M,K,N (default: 1096,1600,1096).")
     parser.add_argument("--limit", type=int, default=0,
                         help="Limit number of cases (0 for all).")
     parser.add_argument("--no-live", action="store_true",
@@ -251,9 +253,16 @@ def main():
                         help="Number of sampling points for Bayesian optimization.")
     args = parser.parse_args()
 
+    try:
+        m, k, n = (int(part.strip()) for part in args.shape.split(","))
+        if min(m, k, n) <= 0:
+            raise ValueError
+    except ValueError:
+        parser.error("--shape must contain three positive integers: M,K,N")
+
     '''单矩阵测试'''
     model = Matmul(data_type=data_type_dict["fp16"])
-    model(Tensor([1096, 1600]), Tensor([1600, 1096]))
+    model(Tensor([m, k]), Tensor([k, n]))
     sim_latency =model.compile_and_simulate(HW, compile_mode=args.mode,n_calls=args.n_calls)
     print(sim_latency* 1e6)
 
